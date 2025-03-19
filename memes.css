@@ -1,3 +1,6 @@
+html {
+  background: linear-gradient(90deg, #E61C25, #F46F21, #F7934E, #FFFFFF, #E15AA3, #C34E95, #B21E69);
+}
 
 .bola{
   position: fixed;
