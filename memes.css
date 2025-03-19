@@ -3,22 +3,40 @@ html {
   scrollbar-width: none;
 }
 
-.bola{
-  position: fixed;
-  left: 10px;
+.grid {
+  display: grid;
+  height: 100%;
+  grid-template-columns: auto 30% auto;
+  grid-template-rows: 100%;
+  column-gap: 1.5%;
+  place-items: center;
+}
+
+/*
+.esquerda {
+  border: 2px solid green
+}
+
+.meio {
+  border: 2px solid green
+}
+
+.direita {
+  border: 2px solid green
+}
+*/
+
+.bola {
   z-index: -1;
   animation: gato-animation 2.5s ease infinite;
 }
 
-.bola2{
-  position: fixed;
-  right: 10px;
+.bola2 {
   z-index: -1;
   animation: gato-animation 2.5s ease infinite;
 }
 
-.invisivel{
-  position: fixed;
+.invisivel {
   z-index: +1;
   animation: gato-animation 2.5s ease infinite;
   opacity: 0;
@@ -28,19 +46,21 @@ html {
   0% {
     scale: 50%;
   }
+
   50% {
     scale: 125%;
   }
+
   100% {
     scale: 50%;
   }
 }
 
 .stretch {
-  top:0;
+  top: 0;
   position: fixed;
-  width:100%;
-  height:100%;
+  width: 100%;
+  height: 100%;
   z-index: -1;
 }
 
@@ -48,13 +68,11 @@ a {
   text-decoration: none;
 }
 
-.cavalo{
+.cavalo {
   text-decoration: none;
   font-size: 150%;
   text-align: center;
   font-family: monospace;
-  margin-top: 100px;
-  margin-bottom: 10px;
   background: linear-gradient(45deg, #00aeff, #00aeff, #13a8ce, #5bc8ef, #e7e7e7, #e7e7e7, #e7e7e7, #ee82a5, #ed81a5, #ff4fcd, #ff4fcd);
   background-size: 400% 400%;
   animation: gradient-animation 5s ease infinite;
@@ -67,9 +85,11 @@ a {
   0% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
+
   100% {
     background-position: 0% 50%;
   }
@@ -79,21 +99,25 @@ a {
   0% {
     transform: rotate3d(0);
   }
+
   25% {
     transform: rotate3d(1, 1, 1, 45deg);
   }
+
   50% {
     transform: rotate3d(2, -1, -1, -0.2turn);
   }
+
   75% {
     transform: rotate3d(0, 1, 0.5, 3.142rad);
   }
+
   100% {
     transform: rotate3d(0);
   }
 }
 
-.xumt{
+.xumt {
   position: fixed;
   left: 10px;
   bottom: 10px;
@@ -101,14 +125,14 @@ a {
   color: #f57e34;
 }
 
-.xumtbola{
+.xumtbola {
   opacity: 0%;
   width: 10%;
   position: fixed;
   animation: xumt-animation 5s linear infinite;
 }
 
-.xumt:hover + .xumtbola{
+.xumt:hover+.xumtbola {
   opacity: 100%;
   width: 10%;
   position: fixed;
@@ -120,18 +144,22 @@ a {
     left: 5%;
     top: 40%;
   }
+
   25% {
     left: 40%;
     top: 80%;
   }
+
   50% {
     left: 85%;
     top: 40%;
   }
+
   75% {
     left: 40%;
     top: 5%;
   }
+
   100% {
     left: 5%;
     top: 40%;
