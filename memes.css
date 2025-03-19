@@ -1,6 +1,15 @@
+a {
+    text-decoration: none;
+}
+
 .cavalo{
     text-decoration: none;
     font-size: 200%;
     text-align: center;
     font-family: monospace;
+    margin-top: 0px;
+    margin-bottom: 10px;
+    background: linear-gradient(to right, #13a8ce, #5bc8ef, #e7e7e7, #ee82a5, #ed81a5);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
