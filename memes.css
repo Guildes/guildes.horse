@@ -5,26 +5,26 @@ html {
 
 .grid {
   display: grid;
-  grid-template-areas: "esquerda meio direita";
-  grid-template-columns: auto auto auto;
-  justify-content: center;
-  align-content: center;
+  height: 100%;
+  grid-template-columns: auto 30% auto;
+  grid-template-rows: 100%;
+  column-gap: 1.5%;
+  place-items: center;
 }
 
-.container>.esquerda {
-  grid-area: "esquerda";
-  align-content: space-between;
+/*
+.esquerda {
+  border: 2px solid green
 }
 
-.container>.meio {
-  grid-area: "meio";
-  align-content: space-between;
+.meio {
+  border: 2px solid green
 }
 
-.container>.direita {
-  grid-area: "direita";
-  align-content: space-between;
+.direita {
+  border: 2px solid green
 }
+*/
 
 .bola {
   z-index: -1;
