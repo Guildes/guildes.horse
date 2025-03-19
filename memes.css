@@ -16,6 +16,13 @@ html {
   animation: gato-animation 2.5s ease infinite;
 }
 
+.invisivel{
+  position: fixed;
+  z-index: +1;
+  animation: gato-animation 2.5s ease infinite;
+  opacity: 0;
+}
+
 @keyframes gato-animation {
   0% {
     scale: 50%;
