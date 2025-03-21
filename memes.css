@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
   scrollbar-width: none;
   background: linear-gradient(to right, #E61C25, #F46F21, #F7934E, #FFFFFF, #E15AA3, #C34E95, #B21E69);
   background-repeat: no-repeat;
@@ -129,7 +130,12 @@ a {
   animation: xumt-animation 5s linear infinite;
 }
 
-.xumt:hover+.xumtbola {
+.xumt:hover+.grid .esquerda .xumtbola {
+  opacity: 100%;
+  width: 10%;
+}
+
+.bola:hover~.xumtbola {
   opacity: 100%;
   width: 10%;
   position: fixed;
@@ -159,6 +165,45 @@ a {
 
   100% {
     left: 5%;
+    top: 40%;
+  }
+}
+
+.yorubola {
+  opacity: 0%;
+  width: 10%;
+  position: fixed;
+  animation: yoru-animation 5s linear infinite;
+}
+
+.bola2:hover~.yorubola {
+  opacity: 100%;
+  width: 10%;
+}
+
+@keyframes yoru-animation {
+  0% {
+    right: 5%;
+    top: 40%;
+  }
+
+  25% {
+    right: 40%;
+    top: 80%;
+  }
+
+  50% {
+    right: 85%;
+    top: 40%;
+  }
+
+  75% {
+    right: 40%;
+    top: 5%;
+  }
+
+  100% {
+    right: 5%;
     top: 40%;
   }
 }
