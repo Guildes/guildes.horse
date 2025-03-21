@@ -18,26 +18,16 @@ body {
   place-items: center;
 }
 
-/*
 .esquerda, .meio, .direita {
-  border: 2px solid green
+  z-index: 0;
+  position: sticky;
+  /*border: 2px solid green*/
 }
-*/
 
-.bola {
-  z-index: -1;
+.bola, .bola2 {
   animation: gato-animation 2.5s ease infinite;
-}
-
-.bola2 {
-  z-index: -1;
-  animation: gato-animation 2.5s ease infinite;
-}
-
-.invisivel {
   z-index: +1;
-  animation: gato-animation 2.5s ease infinite;
-  opacity: 0;
+  position: sticky;
 }
 
 @keyframes gato-animation {
@@ -52,14 +42,6 @@ body {
   100% {
     scale: 50%;
   }
-}
-
-.stretch {
-  top: 0;
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
 }
 
 a {
@@ -77,6 +59,7 @@ a {
   /*animation: spin-animation 5s linear infinite;*/
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  z-index: +2;
 }
 
 @keyframes gradient-animation {
@@ -128,7 +111,7 @@ a {
   width: 10%;
   position: fixed;
   animation: xumt-animation 5s linear infinite;
-  z-index: -1;
+  z-index: 0;
 }
 
 .xumt:hover+.grid .esquerda .xumtbola {
