@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit a New Build</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        .form-container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .link-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #ddd;
+            color: #333;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .link-button:hover {
+            background-color: #ccc;
+        }
+        /* Styling for the multi-select container */
+        .author-select-container {
+            width: 100%;
+            height: 200px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            box-sizing: border-box;
+            margin: 5px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .author-option {
+            display: flex;
+            align-items: center;
+            padding: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .author-option:hover {
+            background-color: #f1f1f1;
+        }
+        .author-option input {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Submit a New Build</h1>
+    <div class="form-container">
+        <form id="build-form">
+            <label for="name">Build Name</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="link">Image Link</label>
+            <input type="text" id="link" name="link" required>
+
+            <label for="coords">Coordinates (e.g., 59 81 -1413)</label>
+            <input type="text" id="coords" name="coords" required>
+
+            <label for="authors">Select Authors</label>
+            <div id="authors" class="author-select-container">
+                <!-- Authors will be populated here -->
+            </div>
+
+            <button type="submit">Submit Build</button>
+        </form>
+        <a href="juelhu.html" class="link-button">Back to Builds List</a>
+    </div>
+
+    <script>
+        // Fetch the list of authors from the server
+        fetch('http://localhost:3000/authors')
+            .then(response => response.json())
+            .then(authors => {
+                const authorsContainer = document.getElementById('authors');
+                authors.forEach(author => {
+                    const authorOption = document.createElement('div');
+                    authorOption.classList.add('author-option');
+
+                    // Create checkbox for selection
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.value = author._id; // We'll still use _id for selection
+                    checkbox.id = `author-${author._id}`;
+                    authorOption.appendChild(checkbox);
+
+                    // Create label for the checkbox (author name)
+                    const label = document.createElement('label');
+                    label.setAttribute('for', `author-${author._id}`);
+                    label.textContent = author.name;
+                    authorOption.appendChild(label);
+
+                    // Append the option to the container
+                    authorsContainer.appendChild(authorOption);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching authors:', error);
+                alert('Failed to load authors list.');
+            });
+
+        // Handle form submission
+        document.getElementById('build-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Get form values
+            const name = document.getElementById('name').value;
+            const link = document.getElementById('link').value;
+            const coords = document.getElementById('coords').value.split(' ').map(coord => parseInt(coord.trim()));
+            
+            // Get selected authors (with both id and name)
+            const authors = Array.from(document.querySelectorAll('#authors input:checked')).map(checkbox => {
+                const authorName = checkbox.nextElementSibling.textContent;
+                return { id: checkbox.value, name: authorName }; // Changed _id to id
+            });
+
+            // Create the new build object
+            const newBuild = {
+                name,
+                link,
+                coords,
+                authors
+            };
+
+            // Send the POST request
+            fetch('http://localhost:3000/builds', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newBuild)
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Build submitted successfully!');
+                window.location.href = 'juelhu.html'; // Redirect to juelhu.html after submission
+            })
+            .catch(error => {
+                console.error('Error submitting build:', error);
+                alert('Error submitting build.');
+            });
+        });
+    </script>
+</body>
+</html>

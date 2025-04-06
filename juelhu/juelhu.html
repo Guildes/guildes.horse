@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>juelhu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .build-container {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .build-item {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 10px;
+            width: 250px;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+        }
+        .build-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        .build-item h3 {
+            font-size: 18px;
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
+        .build-item p {
+            font-size: 14px;
+            color: #555;
+        }
+        .build-item .author {
+            font-style: italic;
+            color: #888;
+        }
+        .link-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .link-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>juelhu</h1>
+    <div class="build-container" id="builds-list">
+        <!-- Builds will be loaded here -->
+    </div>
+
+    <!-- Link to redirect to form page -->
+    <a href="form.html" class="link-button">Submit New Build</a>
+
+    <script>
+        // Fetch data from the API
+        fetch('http://localhost:3000/builds')
+            .then(response => response.json())
+            .then(builds => {
+                const buildsList = document.getElementById('builds-list');
+                builds.forEach(build => {
+                    // Create a div for each build
+                    const buildItem = document.createElement('div');
+                    buildItem.classList.add('build-item');
+
+                    // Build image
+                    const buildImage = document.createElement('img');
+                    buildImage.src = build.link;
+                    buildImage.alt = build.name;
+                    buildItem.appendChild(buildImage);
+
+                    // Build name
+                    const buildName = document.createElement('h3');
+                    buildName.textContent = build.name;
+                    buildItem.appendChild(buildName);
+
+                    // Build coordinates
+                    const buildCoords = document.createElement('p');
+                    buildCoords.textContent = `Coordinates: (${build.coords.join(', ')})`;
+                    buildItem.appendChild(buildCoords);
+                    
+                    buildItem.onclick = copyToClipboard(build.coords.join(' '));
+
+                    // Author information
+                    const authors = build.authors.map(author => author.name).join(', ');
+                    const buildAuthors = document.createElement('p');
+                    buildAuthors.classList.add('author');
+                    buildAuthors.textContent = `Author(s): ${authors}`;
+                    buildItem.appendChild(buildAuthors);
+
+                    // Add build item to the builds list
+                    buildsList.appendChild(buildItem);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching builds:', error);
+                const buildsList = document.getElementById('builds-list');
+                buildsList.textContent = 'Failed to load builds.';
+            });
+        
+        function copyToClipboard(coords) {
+            // Get the text field
+            var copyText = "/tp " + coords;
+
+            // Copy the text inside the text field
+            navigator.clipboard.writeText(copyText);
+        }
+
+    </script>
+</body>
+</html>
