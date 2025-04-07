@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistics - juelhu</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .chart-container {
+            width: 90%;
+            max-width: 600px; /* Maximum width to prevent the chart from becoming too large */
+            margin: 0 auto;
+        }
+        canvas {
+            width: 100% !important; /* Ensure it takes full width of the container */
+            height: auto !important; /* Adjust height automatically to maintain aspect ratio */
+        }
+        .link-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .link-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Statistics</h1>
+
+    <div class="chart-container">
+        <canvas id="author-pie-chart"></canvas>
+    </div>
+
+    <a href="juelhu.html" class="link-button">Back to Builds</a>
+
+    <script>
+        console.log(window.location.hostname)
+        if(window.location.hostname == "guildes.horse"){
+            backend = 'https://juelhu-backend-583521803542.us-central1.run.app';
+        } else {
+            backend = 'http://localhost:8080';
+        }
+
+        // Fetch builds from the API
+        fetch(`${backend}/builds`)
+            .then(response => response.json())
+            .then(builds => {
+                const authorBuildCount = {};
+
+                // Count the number of builds per author
+                builds.forEach(build => {
+                    build.authors.forEach(author => {
+                        if (!authorBuildCount[author.name]) {
+                            authorBuildCount[author.name] = 0;
+                        }
+                        authorBuildCount[author.name]++;
+                    });
+                });
+
+                // Prepare data for the pie chart
+                const authorNames = Object.keys(authorBuildCount);
+                const buildCounts = Object.values(authorBuildCount);
+
+                // Create the pie chart
+                const ctx = document.getElementById('author-pie-chart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: authorNames,
+                        datasets: [{
+                            label: 'Builds by Author',
+                            data: buildCounts,
+                            backgroundColor: ['#00FFAA', '#BD93F9', '#FFCE56', '#98ff8c', '#69b00b', '#FFA1D9', '#b6925e'],
+                            hoverOffset: 5
+                        }]
+                    },
+                    options: {
+                        responsive: true, // Make the chart responsive
+                        plugins: {
+                            legend: {
+                                position: 'top', // Place the legend at the top of the chart
+                            }
+                        }
+                    }
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching builds:', error);
+            });
+    </script>
+</body>
+</html>

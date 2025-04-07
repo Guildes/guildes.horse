@@ -51,71 +51,139 @@
         .link-button:hover {
             background-color: #45a049;
         }
+        .filter-container {
+            margin-bottom: 20px;
+        }
+        select {
+            padding: 8px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .button-container {
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
     <h1>juelhu</h1>
+
+    <!-- Button Container with two buttons -->
+    <div class="button-container">
+        <a href="form.html" class="link-button">Submit New Build</a>
+        <a href="statistics.html" class="link-button">Statistics</a>
+    </div>
+
+    <!-- Dynamic filter to select authors -->
+    <div class="filter-container">
+        <label for="author-filter">Filter by Author:</label>
+        <select id="author-filter">
+            <option value="">All Authors</option>
+            <!-- Options will be populated dynamically -->
+        </select>
+    </div>
+
     <div class="build-container" id="builds-list">
         <!-- Builds will be loaded here -->
     </div>
 
-    <!-- Link to redirect to form page -->
-    <a href="form.html" class="link-button">Submit New Build</a>
-
     <script>
-        // Fetch data from the API
-        fetch('http://localhost:3000/builds')
+        console.log(window.location.hostname)
+        if(window.location.hostname == "guildes.horse"){
+            backend = 'https://juelhu-backend-583521803542.us-central1.run.app';
+        } else {
+            backend = 'http://localhost:8080';
+        }
+
+        let allBuilds = [];
+
+        // Fetch authors from API
+        fetch(`${backend}/authors`)
+            .then(response => response.json())
+            .then(authors => {
+                const authorFilter = document.getElementById('author-filter');
+                authors.forEach(author => {
+                    const option = document.createElement('option');
+                    option.value = author._id;
+                    option.textContent = author.name;
+                    authorFilter.appendChild(option);
+                });
+
+                // Listen for filter changes
+                authorFilter.addEventListener('change', filterBuildsByAuthor);
+            })
+            .catch(error => {
+                console.error('Error fetching authors:', error);
+            });
+
+        // Fetch builds from API
+        fetch(`${backend}/builds`)
             .then(response => response.json())
             .then(builds => {
-                const buildsList = document.getElementById('builds-list');
-                builds.forEach(build => {
-                    // Create a div for each build
-                    const buildItem = document.createElement('div');
-                    buildItem.classList.add('build-item');
-
-                    // Build image
-                    const buildImage = document.createElement('img');
-                    buildImage.src = build.link;
-                    buildImage.alt = build.name;
-                    buildItem.appendChild(buildImage);
-
-                    // Build name
-                    const buildName = document.createElement('h3');
-                    buildName.textContent = build.name;
-                    buildItem.appendChild(buildName);
-
-                    // Build coordinates
-                    const buildCoords = document.createElement('p');
-                    buildCoords.textContent = `Coordinates: (${build.coords.join(', ')})`;
-                    buildItem.appendChild(buildCoords);
-                    
-                    buildItem.onclick = copyToClipboard(build.coords.join(' '));
-
-                    // Author information
-                    const authors = build.authors.map(author => author.name).join(', ');
-                    const buildAuthors = document.createElement('p');
-                    buildAuthors.classList.add('author');
-                    buildAuthors.textContent = `Author(s): ${authors}`;
-                    buildItem.appendChild(buildAuthors);
-
-                    // Add build item to the builds list
-                    buildsList.appendChild(buildItem);
-                });
+                allBuilds = builds;
+                displayBuilds(builds);
             })
             .catch(error => {
                 console.error('Error fetching builds:', error);
                 const buildsList = document.getElementById('builds-list');
                 buildsList.textContent = 'Failed to load builds.';
             });
-        
-        function copyToClipboard(coords) {
-            // Get the text field
-            var copyText = "/tp " + coords;
 
-            // Copy the text inside the text field
-            navigator.clipboard.writeText(copyText);
+        // Function to display the builds
+        function displayBuilds(builds) {
+            const buildsList = document.getElementById('builds-list');
+            buildsList.innerHTML = ''; // Clear current builds
+            builds.forEach(build => {
+                const buildItem = document.createElement('div');
+                buildItem.classList.add('build-item');
+
+                const buildImage = document.createElement('img');
+                buildImage.src = build.link;
+                buildImage.alt = build.name;
+                buildItem.appendChild(buildImage);
+
+                const buildName = document.createElement('h3');
+                buildName.textContent = build.name;
+                buildItem.appendChild(buildName);
+
+                const buildCoords = document.createElement('p');
+                buildCoords.textContent = `Coordinates: (${build.coords.join(', ')})`;
+                buildItem.appendChild(buildCoords);
+
+                buildItem.onclick = function() {
+                    copyToClipboard(build.coords.join(' '));
+                };
+
+                if(build.section != undefined && build.section != ''){
+                    const buildSection = document.createElement('p');
+                    buildSection.textContent = `Section: ${build.section}`;
+                    buildItem.appendChild(buildSection);
+                }
+
+                const authors = build.authors.map(author => author.name).join(', ');
+                const buildAuthors = document.createElement('p');
+                buildAuthors.classList.add('author');
+                buildAuthors.textContent = `Author(s): ${authors}`;
+                buildItem.appendChild(buildAuthors);
+                
+
+                buildsList.appendChild(buildItem);
+            });
         }
 
+        // Filter builds by selected author
+        function filterBuildsByAuthor(event) {
+            const selectedAuthorId = event.target.value;
+            const filteredBuilds = selectedAuthorId
+                ? allBuilds.filter(build => build.authors.some(author => author.id === selectedAuthorId))
+                : allBuilds;
+            displayBuilds(filteredBuilds);
+        }
+
+        function copyToClipboard(coords) {
+            const copyText = "/tp " + coords;
+            navigator.clipboard.writeText(copyText);
+        }
     </script>
 </body>
 </html>

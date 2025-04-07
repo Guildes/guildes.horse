@@ -101,15 +101,25 @@
             <div id="authors" class="author-select-container">
                 <!-- Authors will be populated here -->
             </div>
+            
+            <label for="section">Section (optional)</label>
+            <input type="text" id="section" name="section">
 
-            <button type="submit">Submit Build</button>
+            <br><br><button type="submit">Submit Build</button>
         </form>
         <a href="juelhu.html" class="link-button">Back to Builds List</a>
     </div>
 
     <script>
+        console.log(window.location.hostname)
+        if(window.location.hostname == "guildes.horse"){
+            backend = 'https://juelhu-backend-583521803542.us-central1.run.app';
+        } else {
+            backend = 'http://localhost:8080';
+        }
+
         // Fetch the list of authors from the server
-        fetch('http://localhost:3000/authors')
+        fetch(`${backend}/authors`)
             .then(response => response.json())
             .then(authors => {
                 const authorsContainer = document.getElementById('authors');
@@ -147,11 +157,12 @@
             const name = document.getElementById('name').value;
             const link = document.getElementById('link').value;
             const coords = document.getElementById('coords').value.split(' ').map(coord => parseInt(coord.trim()));
+            const section = document.getElementById('section').value;
             
             // Get selected authors (with both id and name)
             const authors = Array.from(document.querySelectorAll('#authors input:checked')).map(checkbox => {
                 const authorName = checkbox.nextElementSibling.textContent;
-                return { id: checkbox.value, name: authorName }; // Changed _id to id
+                return { id: checkbox.value, name: authorName };
             });
 
             // Create the new build object
@@ -159,11 +170,13 @@
                 name,
                 link,
                 coords,
-                authors
+                authors,
+                section
             };
+            console.log(JSON.stringify(newBuild))
 
             // Send the POST request
-            fetch('http://localhost:3000/builds', {
+            fetch(`${backend}/builds`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -173,7 +186,7 @@
             .then(response => response.json())
             .then(data => {
                 alert('Build submitted successfully!');
-                window.location.href = 'juelhu.html'; // Redirect to juelhu.html after submission
+                window.location.href = 'form.html'; // TODO: Redirect to juelhu.html after submission
             })
             .catch(error => {
                 console.error('Error submitting build:', error);
