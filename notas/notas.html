@@ -21,12 +21,21 @@
         }
         .card {
             position: relative;
-            width: 70vmin;
-            height: 34vmin;
+            width: 70vmin; /* Width adjusted for mobile size */
+            height: calc(70vmin * 830 / 644); /* Height adjusted to maintain the aspect ratio of 644x830 */
             margin: 20px;
             perspective: 1000px;
             cursor: pointer;
         }
+
+        /* Media query for larger screens (desktops) */
+        @media (min-width: 1024px) {
+            .card {
+                width: 50vmin; /* Smaller size for desktops */
+                height: calc(50vmin * 830 / 644); /* Adjust height based on new width */
+            }
+        }
+
         .card-inner {
             position: absolute;
             width: 100%;
@@ -46,11 +55,11 @@
         }
         .card .front {
             background-image: url('');
-            background-size: cover;
+            background-size: cover; /* Ensure the image covers the card fully */
         }
         .card .back {
             background-image: url('');
-            background-size: cover;
+            background-size: cover; /* Ensure the image covers the card fully */
             transform: rotateY(180deg);
         }
         .btn-next {
