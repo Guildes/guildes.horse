@@ -153,6 +153,14 @@ a {
   }
 }
 
+.yoru {
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+  font-family: "Comic Sans MS";
+  color: #f57e34;
+}
+
 .yorubola {
   opacity: 0%;
   width: 10%;
