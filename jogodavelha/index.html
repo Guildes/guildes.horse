@@ -13,9 +13,23 @@ html, body, #canvas {
 
 body {
 	color: white;
-	background-color: black;
+	background-color: #282A36;
 	overflow: hidden;
 	touch-action: none;
+}
+
+html, body {
+    height: 100%;
+}
+
+html {
+    display: table;
+    margin: auto;
+}
+
+body {
+    display: table-cell;
+    vertical-align: middle;
 }
 
 #canvas {
@@ -38,7 +52,7 @@ body {
 }
 
 #status {
-	background-color: #282A36;
+	background-color: #242424;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -111,7 +125,7 @@ body {
 
 		<script src="jogo.js"></script>
 		<script>
-const GODOT_CONFIG = {"args":[],"canvasResizePolicy":1,"ensureCrossOriginIsolationHeaders":true,"executable":"jogo","experimentalVK":false,"fileSizes":{"jogo.pck":72992,"jogo.wasm":43699190},"focusCanvas":true,"gdextensionLibs":[]};
+const GODOT_CONFIG = {"args":[],"canvasResizePolicy":1,"ensureCrossOriginIsolationHeaders":true,"executable":"jogo","experimentalVK":false,"fileSizes":{"jogo.pck":50208,"jogo.wasm":43699190},"focusCanvas":true,"gdextensionLibs":[]};
 const GODOT_THREADS_ENABLED = false;
 const engine = new Engine(GODOT_CONFIG);
 
