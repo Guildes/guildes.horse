@@ -1,0 +1,19 @@
+body {
+  background: #282a36;
+  color: #f8f8f2;
+  font-size: 20px;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+a:link,
+a:visited {
+  color: #8BE9FD;
+}
+
+a:hover {
+  color: #BD93F9;
+}
+
+a:active {
+  color: #44475A;
+}
