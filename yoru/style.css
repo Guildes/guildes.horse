@@ -17,3 +17,8 @@ a:hover {
 a:active {
   color: #44475A;
 }
+
+a::before {
+  content: "👉";
+  text-decoration: none;
+}
