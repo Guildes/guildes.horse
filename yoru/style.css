@@ -1,5 +1,5 @@
 :root {
-  --default-font-size: 2.5rem;
+  --default-font-size: 2rem;
 }
 
 body {
@@ -7,12 +7,11 @@ body {
   color: #f8f8f2;
   font-size: var(--default-font-size);
   font-family: "Comic Sans MS", cursive, sans-serif;
-  padding: 3rem;
-}
 
-.title {
-  margin: 1rem;
-  font-size: calc(var(--default-font-size) * 1.5);
+  position: relative;
+  width: fit-content;
+  margin: auto;
+  margin-top: 3rem;
 }
 
 a:link,
@@ -29,8 +28,27 @@ a:active {
   color: #44475A;
 }
 
+.title {
+  font-size: calc(var(--default-font-size) * 1.5);
+  margin-bottom: 1rem;
+}
+
+.normal {
+  padding-left: 1rem;
+  font-size: var(--default-font-size);
+}
+
+.spacer {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
 .games {
-  padding-left: 2rem;
+  font-size: calc(var(--default-font-size) * 1.1);
+}
+
+.games_list {
+  padding-left: 1rem;
 }
 
 .games_item::before {
