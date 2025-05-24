@@ -51,12 +51,22 @@ a:active {
   padding-left: 1rem;
 }
 
+.games_item {
+  padding: 0.5rem 0.5rem;
+  transition: all 0.2s;
+}
+
 .games_item::before {
-  content: "👉";
+  content: "👆 ";
   text-decoration: none;
   transition: all 0.2s;
+  display: inline-block;
 }
 
 .games_item:has(a:hover) {
   font-size: calc(var(--default-font-size) * 1.1);
+}
+
+.games_item:has(a:hover)::before {
+  transform: rotate(90deg);
 }
