@@ -59,7 +59,7 @@ a:active {
 .games_item::before {
   content: "👆 ";
   text-decoration: none;
-  transition: all 0.2s;
+  transition: all 0.4s;
   display: inline-block;
 }
 
@@ -68,5 +68,5 @@ a:active {
 }
 
 .games_item:has(a:hover)::before {
-  transform: rotate(90deg);
+  transform: rotate(450deg);
 }
