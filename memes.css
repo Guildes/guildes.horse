@@ -48,14 +48,20 @@ a {
   text-decoration: none;
 }
 
+@property --rotation {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
 .cavalo {
   text-decoration: none;
   font-size: 150%;
   text-align: center;
   font-family: monospace;
-  background: linear-gradient(45deg, #00aeff, #00aeff, #13a8ce, #5bc8ef, #e7e7e7, #e7e7e7, #e7e7e7, #ee82a5, #ed81a5, #ff4fcd, #ff4fcd);
-  background-size: 400% 400%;
-  animation: gradient-animation 2.5s ease infinite;
+  background: linear-gradient(var(--rotation), #00aeff, #00aeff, #13a8ce, #5bc8ef, #e7e7e7, #e7e7e7, #e7e7e7, #ee82a5, #ed81a5, #ff4fcd, #ff4fcd);
+  background-size: 100% 100%;
+  animation: gradient-animation 2.5s linear infinite;
   /*animation: spin-animation 5s linear infinite;*/
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -64,15 +70,15 @@ a {
 
 @keyframes gradient-animation {
   0% {
-    background-position: 0% 50%;
+    --rotation: 0deg;
   }
 
   50% {
-    background-position: 100% 50%;
+    --rotation: 180deg;
   }
 
   100% {
-    background-position: 0% 50%;
+    --rotation: 360deg;
   }
 }
 
