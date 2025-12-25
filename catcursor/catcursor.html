@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Random Redirect</title>
+    <script type="text/javascript">
+        // List of URLs to redirect to
+        var urls = [
+            "https://raw.githubusercontent.com/Guildes/Images/refs/heads/main/OnekoGuru.png",
+            "https://raw.githubusercontent.com/Guildes/Images/refs/heads/main/OnekoRiley.png",
+            "https://raw.githubusercontent.com/Guildes/Images/refs/heads/main/OnekoRiley.png"
+        ];
+
+        // Generate a random index based on the array length
+        var randomIndex = Math.floor(Math.random() * urls.length);
+
+        // Get the random URL
+        var randomUrl = urls[randomIndex];
+
+        // Redirect the user to the random URL
+        window.location.href = randomUrl;
+    </script>
+</head>
+<body>
+</body>
+</html>
